@@ -11,7 +11,6 @@ use error::Result;
 use types::Args;
 use router::serve;
 
-
 #[tokio::main]
 async fn main() -> Result<()> {
     let cmd_args = Args::parse();
