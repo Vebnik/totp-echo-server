@@ -21,8 +21,17 @@ jobs:
       - uses: actions/checkout@master
       - name: Compile and release
         uses: rust-build/rust-build.action@v1.4.5
+        id: compile
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          UPLOAD_MODE: none
           RUSTTARGET: ${{ matrix.target }}
           EXTRA_FILES: "readme.md"
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Binary
+          path: |
+              ${{ steps.compile.outputs.BUILT_ARCHIVE }}
+              ${{ steps.compile.outputs.BUILT_CHECKSUM }}
